@@ -32,3 +32,20 @@ window.addEventListener('DOMContentLoaded', event => {
     });
 
 });
+
+const API_URL = 'https://guodjhls3c.execute-api.us-east-2.amazonaws.com/Prod/experiences';
+    fetch(API_URL)
+        .then(res => res.json())
+        .then(data => {
+            data.forEach(job => {
+                const container = document.getElementById("experiences");
+                const startDate = `${job.start_month}/${job.start_year}`;
+                let endDate = "";
+                if (job.end_month === 0 && job.end_year === 0) {
+                    endDate = "Present";
+                } else {
+                    endDate = `${job.end_month}/${job.end_year}`;
+                }
+                container.innerHTML += `<div class="d-flex flex-column flex-md-row justify-content-between mb-5"><div class="flex-grow-1"><h3 class="mb-0">${job.title}</h3><div class="subheading mb-3">${job.company}</div><p>${job.description}</p></div><div class="flex-shrink-0"><span class="text-primary">${startDate} - ${endDate}</span></div></div>`;
+            });
+        });
