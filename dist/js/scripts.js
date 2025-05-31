@@ -33,8 +33,8 @@ window.addEventListener('DOMContentLoaded', event => {
 
 });
 
-const API_URL = 'https://guodjhls3c.execute-api.us-east-2.amazonaws.com/Prod/experiences';
-    fetch(API_URL)
+const API_URL = 'https://guodjhls3c.execute-api.us-east-2.amazonaws.com/Prod';
+    fetch(`${API_URL}/experiences`)
         .then(res => res.json())
         .then(data => {
             data.forEach(job => {
@@ -49,3 +49,20 @@ const API_URL = 'https://guodjhls3c.execute-api.us-east-2.amazonaws.com/Prod/exp
                 container.innerHTML += `<div class="d-flex flex-column flex-md-row justify-content-between mb-5"><div class="flex-grow-1"><h3 class="mb-0">${job.title}</h3><div class="subheading mb-3">${job.company}</div><p>${job.description}</p></div><div class="flex-shrink-0"><span class="text-primary">${startDate} - ${endDate}</span></div></div>`;
             });
         });
+
+        fetch(`${API_URL}/education`)
+            .then(res => res.json())
+            .then(data => {
+                data.forEach(education => {
+                    const container = document.getElementById("educations");
+                    const startDate = `${education.end_year}`;
+                    container.innerHTML += `<div class="d-flex flex-column flex-md-row justify-content-between mb-5">
+                            <div class="flex-grow-1">
+                                <h3 class="mb-0">${education.school}</h3>
+                                <div class="subheading mb-3">${education.cert}</div>
+                                <div>${education.description}</div>
+                            </div>
+                            <div class="flex-shrink-0"><span class="text-primary">${startDate}</span></div>
+                        </div>`;
+                });
+            });
